@@ -1,17 +1,12 @@
-<!--
-  @author qiukangming
-  @description
-  @date 2021/03/01 16:52
--->
 <template>
   <div style="background-color: #494949; width: 100%; height: 100%">
     <div class="head404"></div>
     <div class="txtbg404">
       <div class="txtbox">
-        <p>对不起，您请求的页面不存在、或已被删除、或暂时不可用</p>
-        <p class="paddingbox">请点击以下链接继续浏览网页</p>
-        <p> >> <a @click="$router.go(-1)">返回上一页面</a></p>
-        <p> >> <a @click="$router.push('/main')">返回网站首页</a></p>
+        <p>Sorry ，This page does not exist, or not found</p>
+        <p class="paddingbox">Please check the next one</p>
+        <p> >> <a @click="$router.go(-1)">Back</a></p>
+        <p> >> <a @click="$router.push('/main')">Home</a></p>
       </div>
     </div>
   </div>
@@ -22,14 +17,14 @@
   width: 580px;
   height: 234px;
   margin: 0 auto 0 auto;
-  background: url('../../assets/img/head404.png') no-repeat;
+  background: url('../assets/img/head404.png') no-repeat;
 }
 
 .txtbg404 {
   width: 499px;
   height: 169px;
   margin: 10px auto 0 auto;
-  background: url('../../assets/img/txtbg404.png') no-repeat;
+  background: url('../assets/img/txt404.png') no-repeat;
 }
 
 .txtbg404 .txtbox {

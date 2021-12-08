@@ -1,3 +1,1 @@
-export default {
-  IS404: false
-}
+export default {IS404: false}
