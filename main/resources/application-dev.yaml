@@ -1,0 +1,48 @@
+server:
+  port: 8000
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/covid
+    username: root
+    password: bonjouroumar200
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  redis:
+    host: localhost
+    port: 6379
+#    database: 1
+#    password: bonjouroumar200
+
+# The pandemic data
+covid:
+  dataUrl: https://voice.baidu.com/act/newpneumonia/newpneumonia#tab1
+
+druid:
+  username: root
+  password: bonjouroumar
+
+token:
+  head: Authorization
+  expireTime: 86400
+  secret: ^_^.[diallo].^_^
+
+site:
+  host: localhost
+
+app:
+  author: alphaoumar
+
+# mybatis plus configuration
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: com.alpha.pandemic.models
+
+alioss:
+  endpoint: oss-cn-shanghai.aliyuncs.com
+  accessKeyId: LTAI5tLDnEpVEQ2bMGAawHPd
+  accessKeySecret: fbqOJjK9q0ijBuDdEGojyjyB8v8jaA
+  bucketName: diallo
+  urlPrefix: https://diallo.oss-cn-shanghai.aliyuncs.com/

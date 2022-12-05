@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alpha.pandemic.mappers.UserMapper">
+
+    <select id="getByUsername" resultType="com.alpha.pandemic.models.User">
+        select * from user where username = #{username}
+    </select>
+    <select id="getAuthListByUsername" resultType="java.lang.String">
+        select m.perms from user u
+                inner join user_role ur
+                inner join role r
+                inner join role_menu rm
+                inner join menu m
+                    on u.id = ur.user_id
+                    and ur.role_id = r.id
+                    and r.id = rm.role_id
+                    and rm.menu_id = m.id
+                    and u.username = #{username}
+                    and m.perms is not null
+                    and m.perms !=''
+                    and m.available = 1
+        <if test="!isAdmin">
+            and r.forbidden=1
+        </if>
+
+    </select>
+    <update id="updateUserStatusById">
+        update user set forbidden =#{integer} where id = #{id}
+    </update>
+    <update id="resetPassword">
+        update user set password = #{encode} where id = #{id}
+    </update>
+    <select id="getAvatarByUsername" resultType="java.lang.String">
+        select avatar from user where username = #{username} and forbidden = 1
+    </select>
+    <select id="getMenusByUsername" resultType="com.alpha.pandemic.models.Menu">
+        select * from menu where id in
+                 (
+                     select distinct menu_id from role_menu where menu_type = #{type}
+                     and role_id in(
+                         select  ur.role_id from user_role ur left join role r on r.id = ur.role_id
+                         where r.forbidden = 1 and user_id = (select id from user where username = #{username}))
+                     group by menu_id)
+    </select>
+    <select id="getUsername" resultType="java.lang.String">
+        select username from user where id = #{id}
+    </select>
+    <select id="getUserByUsername" resultType="java.lang.Long">
+        select id from user where username = #{username}
+    </select>
+
+</mapper>

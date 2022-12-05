@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alpha.pandemic.mappers.ProductMapper">
+
+
+    <select id="findProductstock" resultType="com.alpha.pandemic.beans.vo.ProductStockVo">
+        select s.p_num, s.stock, p.name, p.id,p.model, p.unit, p.image_url
+        from productstock s , product p where p.p_num = s.p_num
+        and s.stock
+        <if test="productVo.name !=null and productVo.name != ''">
+            and p.name like concat('%',#{productVo.name},'%')
+        </if>
+        <choose>
+            <when test="productVo.threeCategoryId != null">
+                and p.three_category_id =#{productVo.threeCategoryId}
+            </when>
+            <when test="productVo.twoCategoryId != null">
+                and p.two_category_id =#{productVo.twoCategoryId}
+            </when>
+            <when test="productVo.oneCategoryId != null">
+                and p.one_category_id =#{productVo.oneCategoryId}
+            </when>
+        </choose>
+        limit #{page}, #{size}
+    </select>
+    <select id="findProductStockCount" resultType="java.lang.Long">
+        select count(*) from productstock s, product p where p.p_num = s.p_num
+        and s.stock
+        <if test="name != null and name != ''">
+            and p.name like concat('%',#{name},'%')
+        </if>
+        <choose>
+            <when test="threeCategoryId != null">
+                and p.three_category_id =#{threeCategoryId}
+            </when>
+            <when test="twoCategoryId != null">
+                and p.two_category_id =#{twoCategoryId}
+            </when>
+            <when test="oneCategoryId != null">
+                and p.one_category_id =#{oneCategoryId}
+            </when>
+        </choose>
+    </select>
+    <select id="getAllProducts" resultType="com.alpha.pandemic.beans.vo.ProductStockVo">
+        select s.p_num, s.stock, p.name, p.id,p.model, p.unit, p.image_url
+        from productstock s , product p where p.p_num = s.p_num
+        and s.stock
+        <if test="name !=null and name != ''">
+            and p.name like concat('%',#{name},'%')
+        </if>
+        <choose>
+            <when test="threeCategoryId != null">
+                and p.three_category_id =#{threeCategoryId}
+            </when>
+            <when test="twoCategoryId != null">
+                and p.two_category_id =#{twoCategoryId}
+            </when>
+            <when test="oneCategoryId != null">
+                and p.one_category_id =#{oneCategoryId}
+            </when>
+        </choose>
+        limit #{page}, #{size}
+-- this also has to be reviewed???
+    </select>
+</mapper>
